@@ -43,11 +43,28 @@ class WorkoutViewModel(
             viewModelScope.launch {
                 repository.addExercise(currentState.session.id, exerciseId)
                     .onSuccess { 
-                        // Refresh session to get updated exercise blocks
                         refreshSession(currentState.session.id)
                     }
                     .onFailure { error ->
                         _uiState.value = WorkoutUiState.Error(error.message ?: "Failed to add exercise")
+                    }
+            }
+        }
+    }
+
+    fun logSet(
+        activeExerciseId: String,
+        weight: Double,
+        reps: Int,
+        rpe: Double?,
+        setType: String
+    ) {
+        val currentState = _uiState.value
+        if (currentState is WorkoutUiState.Success) {
+            viewModelScope.launch {
+                repository.logSet(activeExerciseId, weight, reps, rpe, setType)
+                    .onSuccess {
+                        refreshSession(currentState.session.id)
                     }
             }
         }

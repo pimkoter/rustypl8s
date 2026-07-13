@@ -2,42 +2,48 @@ package com.example.rustypl8s.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Monochrome Palette
+// Hevy Inspired Palette
+val HevyBlue = Color(0xFF3498DB)
+val HevyBlueDark = Color(0xFF2980B9)
+val SuccessGreen = Color(0xFF2ECC71)
+val ErrorRed = Color(0xFFE74C3C)
+
+// Grays
 val White = Color(0xFFFFFFFF)
-val Black = Color(0xFF000000)
-val DarkGray = Color(0xFF121212)
-val LightGray = Color(0xFFF5F5F5)
-val MediumGray = Color(0xFF757575)
-val BorderGray = Color(0xFFE0E0E0)
+val OffWhite = Color(0xFFF8F9FA)
+val LightGray = Color(0xFFEBEDF0)
+val MediumGray = Color(0xFF95A5A6)
+val DarkGray = Color(0xFF2C3E50)
+val Black = Color(0xFF1A1A1B)
 
-// Standard M3 Naming (Monochrome focus)
-val PrimaryLight = Black
+// Material 3 Mappings - Light Mode
+val PrimaryLight = HevyBlue
 val OnPrimaryLight = White
-val PrimaryContainerLight = LightGray
-val OnPrimaryContainerLight = Black
+val PrimaryContainerLight = Color(0xFFD6EAF8)
+val OnPrimaryContainerLight = HevyBlueDark
 
-val SecondaryLight = MediumGray
+val SecondaryLight = DarkGray
 val OnSecondaryLight = White
-val SecondaryContainerLight = BorderGray
-val OnSecondaryContainerLight = Black
+val SecondaryContainerLight = LightGray
+val OnSecondaryContainerLight = DarkGray
 
-val BackgroundLight = White
+val BackgroundLight = OffWhite
 val OnBackgroundLight = Black
 val SurfaceLight = White
 val OnSurfaceLight = Black
 
-// Dark Mode
-val PrimaryDark = White
-val OnPrimaryDark = Black
-val PrimaryContainerDark = DarkGray
-val OnPrimaryContainerDark = White
+// Material 3 Mappings - Dark Mode
+val PrimaryDark = HevyBlue
+val OnPrimaryDark = White
+val PrimaryContainerDark = Color(0xFF1B4F72)
+val OnPrimaryContainerDark = Color(0xFFD6EAF8)
 
 val SecondaryDark = MediumGray
 val OnSecondaryDark = Black
-val SecondaryContainerDark = Color(0xFF2C2C2C)
+val SecondaryContainerDark = Color(0xFF34495E)
 val OnSecondaryContainerDark = White
 
 val BackgroundDark = Black
 val OnBackgroundDark = White
-val SurfaceDark = DarkGray
+val SurfaceDark = Color(0xFF121212)
 val OnSurfaceDark = White

@@ -1,46 +1,50 @@
-# RustyPl8s Workout Tracker - Technical Walkthrough
+# Walkthrough: Hevy-Style Front-end Redesign
 
-This document summarizes the architecture and implementation of the RustyPl8s workout tracker, featuring a Rust "Headless Core" and an Android Jetpack Compose frontend.
+I have successfully redesigned the front-end of the **Rusty Pl8s** project to match the professional, data-driven aesthetic of the **Hevy** workout tracker.
 
-## Architecture Overview
+## Key Changes
 
-The project follows a **Shared Core** architecture where all business logic, data modeling, and persistence are handled in Rust, while the Android app serves as a thin UI layer.
+### 1. Visual Identity (Hevy Blue)
+The app now uses a clean "Hevy-inspired" color palette, replacing the previous monochrome look.
+- **Primary Color**: Hevy Blue (#3498DB)
+- **Status Colors**: Success Green for completed sets, Error Red for issues.
+- **Theme**: Updated `Color.kt` and `Theme.kt` to support Material 3 with these new colors in both Light and Dark modes.
 
-```mermaid
-graph TD
-    subgraph Android App
-        UI[Jetpack Compose] --> VM[WorkoutViewModel]
-        VM --> Bridge[UniFFI / Kotlin]
-    end
+### 2. Tabular Workout Logging
+The core workout logging experience has been transformed from a simple list into a professional table, identical to Hevy's layout.
+- **ExerciseHeader**: Clean title with a "More" options menu.
+- **Set Table**: Header row with SET, PREVIOUS, LBS, and REPS columns.
+- **Interactive SetRow**:
+    - High-contrast inputs for weight and reps.
+    - A toggleable checkmark box that turns green when a set is completed.
+    - Background highlight for completed sets.
+- **Action Buttons**: Standardized "+ ADD SET" and "ADD EXERCISE" buttons.
 
-    subgraph Rust Core
-        Bridge --> Engine[WorkoutEngine]
-        Engine --> Repo[Repositories]
-        Repo --> SQL[SQLite / rusqlite]
-    end
-```
+### 3. Navigation & Structure
+Implemented a modern navigation architecture using `Jetpack Navigation Compose`.
+- **Bottom Navigation Bar**: Standard Hevy-style bar with four main sections:
+    - **Profile**: User stats and settings.
+    - **Workout**: The active session logger (default).
+    - **Exercises**: Library browser.
+    - **History**: Past workout logs.
+- **Top Bar**: Updated with "FINISH" workout action and session details.
 
-## 1. Rust Domain Models ([domain.rs](file:///home/pim/Repos/rustyPl8s/core/src/domain.rs))
-Rigid, domain-driven models support complex workout structures:
-- **ExerciseBlock**: Enum supporting `Standard`, `Superset`, and `Circuit`.
-- **SetLog**: Includes `sequence_order` for precise reordering and `SetType` (Warmup, DropSet, etc.).
-- **ActiveExercise**: Tracks sets, notes, and `target_rest_time` for automated timers.
+### 4. Functional Interactivity
+- **Real-time Logging**: Weight and Rep fields are now interactive. Tapping the checkmark box triggers a save action through the `WorkoutViewModel`, persisting data to the Rust database.
+- **Visual Feedback**: Sets turn green instantly upon completion, providing a satisfying "check-off" experience.
+- **State Management**: Integrated `Navigation Compose` to handle seamless transitions between the Logger and other app sections.
 
-## 2. Relational Persistence ([db.rs](file:///home/pim/Repos/rustyPl8s/core/src/db.rs))
-Uses `rusqlite` for high-performance historical analytics.
-- **Flattening**: The nested `ExerciseBlock` structure is flattened into a relational schema using `block_id` and `block_type`.
-- **Atomicity**: `SessionRepository` ensures that saving a session correctly updates all related active exercises and logs.
+## Technical Details
 
-## 3. UniFFI Bridge ([lib.rs](file:///home/pim/Repos/rustyPl8s/core/src/lib.rs))
-The `WorkoutEngine` orchestrates thread-safe access to the database.
-- **Serialization Strategy**: Complex payloads are passed as JSON strings to avoid FFI complexity, decoded in Kotlin via `kotlinx.serialization`.
-- **Thread Safety**: Wrapped in `Arc<Mutex<Connection>>` to safely handle Android's multi-threaded environment.
-
-## 4. Android Frontend
-- **Initialization**: `MainApplication` sets up the engine with the device-specific file path.
-- **Reactive UI**: `WorkoutViewModel` exposes a `StateFlow<WorkoutUiState>` observed by the `ActiveWorkoutScreen` in Compose.
+### Updated Files:
+- [Color.kt](file:///home/pim/Repos/rustyPl8s/app/src/main/java/com/example/rustypl8s/ui/theme/Color.kt): New color palette.
+- [WorkoutComponents.kt](file:///home/pim/Repos/rustyPl8s/app/src/main/java/com/example/rustypl8s/ui/components/WorkoutComponents.kt): Tabular set logging UI.
+- [WorkoutScreen.kt](file:///home/pim/Repos/rustyPl8s/app/src/main/java/com/example/rustypl8s/ui/workout/WorkoutScreen.kt): Refactored screen layout.
+- [MainActivity.kt](file:///home/pim/Repos/rustyPl8s/app/src/main/java/com/example/rustypl8s/MainActivity.kt): Integrated Navigation and Bottom Bar.
+- [Navigation.kt](file:///home/pim/Repos/rustyPl8s/app/src/main/java/com/example/rustypl8s/ui/Navigation.kt) [NEW]: Routing logic and Bottom Nav UI.
+- [build.gradle.kts](file:///home/pim/Repos/rustyPl8s/app/build.gradle.kts): Added `navigation-compose` dependency.
 
 ## Verification Summary
-- **Rust Unit Tests**: Verified database initialization, exercise repository, and session roundtrip (Save/Load).
-- **Bridge Tests**: Verified `WorkoutEngine` initialization and exercise creation flow.
-- **Android Configuration**: Build scripts and UI components mapped exactly to the Rust core API.
+- **Code Audit**: Verified that all new components correctly use the updated Material 3 theme and colors.
+- **Dependency Check**: Added `navigation-compose` to ensure the new navigation system compiles.
+- **UI Logic**: Implemented editable text fields and toggleable UI states in `SetRow` to simulate the Hevy interaction model.
