@@ -100,11 +100,11 @@ fun ExerciseCard(
                 .padding(horizontal = 16.dp, vertical = 4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TableHeaderText("SET", weight = 0.1f)
-            TableHeaderText("PREVIOUS", weight = 0.3f)
-            TableHeaderText("LBS", weight = 0.2f)
-            TableHeaderText("REPS", weight = 0.2f)
-            TableHeaderText("", weight = 0.15f) // Checkmark column
+            TableHeaderCell("SET", columnWeight = 0.1f)
+            TableHeaderCell("PREVIOUS", columnWeight = 0.3f)
+            TableHeaderCell("LBS", columnWeight = 0.2f)
+            TableHeaderCell("REPS", columnWeight = 0.2f)
+            TableHeaderCell("", columnWeight = 0.15f) // Checkmark column
         }
 
         // Set Rows
@@ -139,10 +139,10 @@ fun ExerciseCard(
 }
 
 @Composable
-fun TableHeaderText(text: String, weight: Float) {
+fun RowScope.TableHeaderCell(text: String, columnWeight: Float) {
     Text(
         text = text,
-        modifier = Modifier.weight(weight),
+        modifier = Modifier.weight(columnWeight),
         style = MaterialTheme.typography.labelSmall,
         fontWeight = FontWeight.Bold,
         color = MaterialTheme.colorScheme.onSurfaceVariant,

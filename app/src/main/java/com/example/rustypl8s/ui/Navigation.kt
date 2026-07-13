@@ -1,13 +1,15 @@
 package com.example.rustypl8s.ui
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,7 +20,7 @@ sealed class Screen(val route: String, val title: String, val icon: androidx.com
     object Profile : Screen("profile", "Profile", Icons.Default.Person)
     object Workout : Screen("workout", "Workout", Icons.Default.PlayArrow)
     object Exercises : Screen("exercises", "Exercises", Icons.Default.Search)
-    object History : Screen("history", "History", Icons.Default.History)
+    object History : Screen("history", "History", Icons.Default.List)
 }
 
 @Composable
