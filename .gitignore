@@ -1,0 +1,29 @@
+# Android - Gradle
+.gradle/
+build/
+app/build/
+*.apk
+*.aar
+local.properties
+
+# Rust - Cargo
+core/target/
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# UniFFI / Generated code (Optional - keep if you want others to build without Rust setup, but usually ignored)
+# app/src/main/java/com/example/rustypl8s/uniffi/
+# app/src/main/jniLibs/
+
+# Artifacts & Notes
+.artifacts/
+walkthrough.artifact.md
+task.artifact.md
+implementation_plan.artifact.md
